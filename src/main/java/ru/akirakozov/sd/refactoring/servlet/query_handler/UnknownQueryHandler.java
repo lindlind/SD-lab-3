@@ -2,7 +2,7 @@ package ru.akirakozov.sd.refactoring.servlet.query_handler;
 
 public class UnknownQueryHandler implements IQueryHandler {
 
-    private String wrongCommand;
+    private final String wrongCommand;
 
     public UnknownQueryHandler(String command) {
         wrongCommand = command;

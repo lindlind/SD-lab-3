@@ -7,13 +7,23 @@ import java.util.ArrayList;
 
 public class SumQueryHandler implements IQueryHandler {
 
+    private final DbManager dbManager;
+
+    public SumQueryHandler() {
+        this(new DbManager());
+    }
+
+    public SumQueryHandler(DbManager manager) {
+        dbManager = manager;
+    }
+
     @Override
     public String getBodyText() throws RuntimeException {
         StringBuilder bodyText = new StringBuilder();
         bodyText.append("Summary price: ").append("\n");
 
         try {
-            ArrayList<Long> results = new DbManager().aggregateProducts(DbQueries.aggregateProductSumPrice());
+            ArrayList<Long> results = dbManager.aggregateProducts(DbQueries.aggregateProductSumPrice());
             for (Long result : results) {
                 bodyText.append(result).append("\n");
             }
