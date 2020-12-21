@@ -1,7 +1,7 @@
 package ru.akirakozov.sd.refactoring.servlet;
 
 import ru.akirakozov.sd.refactoring.HtmlResponseBuilder;
-import ru.akirakozov.sd.refactoring.servlet.query_handler.*;
+import ru.akirakozov.sd.refactoring.servlet.handlers.*;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

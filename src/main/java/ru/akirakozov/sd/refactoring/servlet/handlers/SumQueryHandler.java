@@ -1,30 +1,30 @@
-package ru.akirakozov.sd.refactoring.servlet.query_handler;
+package ru.akirakozov.sd.refactoring.servlet.handlers;
 
 import ru.akirakozov.sd.refactoring.db.DbManager;
 import ru.akirakozov.sd.refactoring.db.DbQueries;
 
 import java.util.ArrayList;
 
-public class CountQueryHandler implements IQueryHandler {
+public class SumQueryHandler implements IQueryHandler {
 
     private final DbManager dbManager;
 
-    public CountQueryHandler() {
+    public SumQueryHandler() {
         this(new DbManager());
     }
 
-    public CountQueryHandler(DbManager manager) {
+    public SumQueryHandler(DbManager manager) {
         dbManager = manager;
     }
 
     @Override
     public String getBodyText() throws RuntimeException {
         StringBuilder bodyText = new StringBuilder();
-        bodyText.append("Number of products: ").append("\n");
+        bodyText.append("Summary price: ").append("\n");
 
         try {
-            ArrayList<Long> results = dbManager.aggregateProducts(DbQueries.aggregateProductCount());
-            for (Long result: results) {
+            ArrayList<Long> results = dbManager.aggregateProducts(DbQueries.aggregateProductSumPrice());
+            for (Long result : results) {
                 bodyText.append(result).append("\n");
             }
 

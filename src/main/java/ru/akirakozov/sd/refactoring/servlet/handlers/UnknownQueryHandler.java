@@ -1,4 +1,4 @@
-package ru.akirakozov.sd.refactoring.servlet.query_handler;
+package ru.akirakozov.sd.refactoring.servlet.handlers;
 
 public class UnknownQueryHandler implements IQueryHandler {
 
