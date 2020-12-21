@@ -10,10 +10,6 @@ public class MinQueryHandler implements IQueryHandler {
 
     private final DbManager dbManager;
 
-    public MinQueryHandler() {
-        this(new DbManager());
-    }
-
     public MinQueryHandler(DbManager manager) {
         dbManager = manager;
     }

@@ -1,6 +1,7 @@
 package ru.akirakozov.sd.refactoring.servlet;
 
 import ru.akirakozov.sd.refactoring.HtmlResponseBuilder;
+import ru.akirakozov.sd.refactoring.db.DbManager;
 import ru.akirakozov.sd.refactoring.servlet.handlers.*;
 
 import javax.servlet.http.HttpServlet;
@@ -13,6 +14,12 @@ import java.io.IOException;
  */
 public class QueryServlet extends HttpServlet {
 
+    private final DbManager dbManager;
+
+    public QueryServlet(DbManager manager) {
+        dbManager = manager;
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String command = request.getParameter("command");
@@ -20,16 +27,16 @@ public class QueryServlet extends HttpServlet {
         IQueryHandler handler;
         switch (command) {
             case "max":
-                handler = new MaxQueryHandler();
+                handler = new MaxQueryHandler(dbManager);
                 break;
             case "min":
-                handler = new MinQueryHandler();
+                handler = new MinQueryHandler(dbManager);
                 break;
             case "sum":
-                handler = new SumQueryHandler();
+                handler = new SumQueryHandler(dbManager);
                 break;
             case "count":
-                handler = new CountQueryHandler();
+                handler = new CountQueryHandler(dbManager);
                 break;
             default:
                 handler = new UnknownQueryHandler(command);

@@ -13,13 +13,19 @@ import java.io.IOException;
  */
 public class AddProductServlet extends HttpServlet {
 
+    private final DbManager dbManager;
+
+    public AddProductServlet(DbManager manager) {
+        dbManager = manager;
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String name = request.getParameter("name");
         long price = Long.parseLong(request.getParameter("price"));
 
         try {
-            new DbManager().insertProduct(name, price);
+            dbManager.insertProduct(name, price);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -10,10 +10,6 @@ public class GetProductsHandler implements IQueryHandler {
 
     private final DbManager dbManager;
 
-    public GetProductsHandler() {
-        this(new DbManager());
-    }
-
     public GetProductsHandler(DbManager manager) {
         dbManager = manager;
     }

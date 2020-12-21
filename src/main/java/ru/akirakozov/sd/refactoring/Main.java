@@ -13,7 +13,8 @@ import ru.akirakozov.sd.refactoring.servlet.QueryServlet;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        new DbManager().initProductTable();
+        DbManager dbManager = new DbManager();
+        dbManager.initProductTable();
 
         Server server = new Server(8081);
 
@@ -21,9 +22,9 @@ public class Main {
         context.setContextPath("/");
         server.setHandler(context);
 
-        context.addServlet(new ServletHolder(new AddProductServlet()), "/add-product");
-        context.addServlet(new ServletHolder(new GetProductsServlet()),"/get-products");
-        context.addServlet(new ServletHolder(new QueryServlet()),"/query");
+        context.addServlet(new ServletHolder(new AddProductServlet(dbManager)), "/add-product");
+        context.addServlet(new ServletHolder(new GetProductsServlet(dbManager)),"/get-products");
+        context.addServlet(new ServletHolder(new QueryServlet(dbManager)),"/query");
 
         server.start();
         server.join();

@@ -10,10 +10,6 @@ public class MaxQueryHandler implements IQueryHandler {
 
     private final DbManager dbManager;
 
-    public MaxQueryHandler() {
-        this(new DbManager());
-    }
-
     public MaxQueryHandler(DbManager manager) {
         dbManager = manager;
     }

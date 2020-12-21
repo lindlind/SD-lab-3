@@ -9,10 +9,6 @@ public class CountQueryHandler implements IQueryHandler {
 
     private final DbManager dbManager;
 
-    public CountQueryHandler() {
-        this(new DbManager());
-    }
-
     public CountQueryHandler(DbManager manager) {
         dbManager = manager;
     }

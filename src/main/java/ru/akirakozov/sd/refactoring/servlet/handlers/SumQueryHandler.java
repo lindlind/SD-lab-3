@@ -9,10 +9,6 @@ public class SumQueryHandler implements IQueryHandler {
 
     private final DbManager dbManager;
 
-    public SumQueryHandler() {
-        this(new DbManager());
-    }
-
     public SumQueryHandler(DbManager manager) {
         dbManager = manager;
     }
