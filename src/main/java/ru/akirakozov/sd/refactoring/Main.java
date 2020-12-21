@@ -3,27 +3,17 @@ package ru.akirakozov.sd.refactoring;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import ru.akirakozov.sd.refactoring.db.DbQueries;
+import ru.akirakozov.sd.refactoring.db.DbManager;
 import ru.akirakozov.sd.refactoring.servlet.AddProductServlet;
 import ru.akirakozov.sd.refactoring.servlet.GetProductsServlet;
 import ru.akirakozov.sd.refactoring.servlet.QueryServlet;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
 
 /**
  * @author akirakozov
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
-            String sql = DbQueries.createProductTable();
-            Statement stmt = c.createStatement();
-
-            stmt.executeUpdate(sql);
-            stmt.close();
-        }
+        DbManager.initProductTable();
 
         Server server = new Server(8081);
 

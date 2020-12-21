@@ -1,15 +1,14 @@
 package ru.akirakozov.sd.refactoring.servlet;
 
+import ru.akirakozov.sd.refactoring.db.DbManager;
 import ru.akirakozov.sd.refactoring.db.DbQueries;
+import ru.akirakozov.sd.refactoring.entities.DbProduct;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * @author akirakozov
@@ -19,21 +18,14 @@ public class GetProductsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
-                Statement stmt = c.createStatement();
-                ResultSet rs = stmt.executeQuery(DbQueries.selectAllFromProduct());
-                response.getWriter().println("<html><body>");
+            response.getWriter().println("<html><body>");
 
-                while (rs.next()) {
-                    String  name = rs.getString("name");
-                    int price  = rs.getInt("price");
-                    response.getWriter().println(name + "\t" + price + "</br>");
-                }
-                response.getWriter().println("</body></html>");
-
-                rs.close();
-                stmt.close();
+            ArrayList<DbProduct> products = DbManager.selectProducts(DbQueries.selectAllFromProduct());
+            for (DbProduct product: products) {
+                response.getWriter().println(product.getName() + "\t" + product.getPrice() + "</br>");
             }
+
+            response.getWriter().println("</body></html>");
 
         } catch (Exception e) {
             throw new RuntimeException(e);
