@@ -13,7 +13,7 @@ public class CountQueryHandler implements IQueryHandler {
         bodyText.append("Number of products: ").append("\n");
 
         try {
-            ArrayList<Long> results = DbManager.aggregateProducts(DbQueries.aggregateProductCount());
+            ArrayList<Long> results = new DbManager().aggregateProducts(DbQueries.aggregateProductCount());
             for (Long result: results) {
                 bodyText.append(result).append("\n");
             }

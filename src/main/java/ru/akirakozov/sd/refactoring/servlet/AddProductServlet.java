@@ -19,7 +19,7 @@ public class AddProductServlet extends HttpServlet {
         long price = Long.parseLong(request.getParameter("price"));
 
         try {
-            DbManager.insertProduct(name, price);
+            new DbManager().insertProduct(name, price);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

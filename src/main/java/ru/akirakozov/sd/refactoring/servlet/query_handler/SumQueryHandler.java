@@ -13,7 +13,7 @@ public class SumQueryHandler implements IQueryHandler {
         bodyText.append("Summary price: ").append("\n");
 
         try {
-            ArrayList<Long> results = DbManager.aggregateProducts(DbQueries.aggregateProductSumPrice());
+            ArrayList<Long> results = new DbManager().aggregateProducts(DbQueries.aggregateProductSumPrice());
             for (Long result : results) {
                 bodyText.append(result).append("\n");
             }

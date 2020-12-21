@@ -14,7 +14,7 @@ public class MaxQueryHandler implements IQueryHandler {
         bodyText.append("<h1>Product with max price: </h1>").append("\n");
 
         try {
-            ArrayList<DbProduct> products = DbManager.selectProducts(DbQueries.selectFromProductWithMaxPrice());
+            ArrayList<DbProduct> products = new DbManager().selectProducts(DbQueries.selectFromProductWithMaxPrice());
             for (DbProduct product: products) {
                 bodyText.append(product.getName()).append("\t").append(product.getPrice()).append("</br>").append("\n");
             }

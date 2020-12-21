@@ -13,7 +13,7 @@ import ru.akirakozov.sd.refactoring.servlet.QueryServlet;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        DbManager.initProductTable();
+        new DbManager().initProductTable();
 
         Server server = new Server(8081);
 

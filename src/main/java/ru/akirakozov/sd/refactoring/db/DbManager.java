@@ -6,9 +6,17 @@ import java.util.ArrayList;
 
 public class DbManager {
 
-    private static String url = "jdbc:sqlite:test.db";
+    private final String url;
 
-    public static void initProductTable() throws SQLException {
+    public DbManager() {
+        this("jdbc:sqlite:mainDb.db");
+    }
+
+    public DbManager(String url) {
+        this.url = url;
+    }
+
+    public void initProductTable() throws SQLException {
         try (Connection c = DriverManager.getConnection(url)) {
             Statement stmt = c.createStatement();
             stmt.executeUpdate(DbQueries.createProductTable());
@@ -16,7 +24,7 @@ public class DbManager {
         }
     }
 
-    public static void insertProduct(String name, Long price) throws SQLException {
+    public void insertProduct(String name, Long price) throws SQLException {
         try (Connection c = DriverManager.getConnection(url)) {
             Statement stmt = c.createStatement();
             stmt.executeUpdate(DbQueries.insertIntoProduct(name, price));
@@ -24,7 +32,7 @@ public class DbManager {
         }
     }
 
-    public static ArrayList<DbProduct> selectProducts(String query) throws SQLException {
+    public ArrayList<DbProduct> selectProducts(String query) throws SQLException {
         try (Connection c = DriverManager.getConnection(url)) {
             Statement stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -43,7 +51,7 @@ public class DbManager {
         }
     }
 
-    public static ArrayList<Long> aggregateProducts(String query) throws SQLException {
+    public ArrayList<Long> aggregateProducts(String query) throws SQLException {
         try (Connection c = DriverManager.getConnection(url)) {
             Statement stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery(query);

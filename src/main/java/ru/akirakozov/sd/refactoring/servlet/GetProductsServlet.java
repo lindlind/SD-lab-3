@@ -21,7 +21,7 @@ public class GetProductsServlet extends HttpServlet {
         StringBuilder bodyText = new StringBuilder();
 
         try {
-            ArrayList<DbProduct> products = DbManager.selectProducts(DbQueries.selectAllFromProduct());
+            ArrayList<DbProduct> products = new DbManager().selectProducts(DbQueries.selectAllFromProduct());
             for (DbProduct product: products) {
                 bodyText.append(product.getName()).append("\t").append(product.getPrice()).append("</br>").append("\n");
             }

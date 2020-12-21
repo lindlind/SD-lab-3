@@ -14,7 +14,7 @@ public class MinQueryHandler implements IQueryHandler {
         bodyText.append("<h1>Product with min price: </h1>").append("\n");
 
         try {
-            ArrayList<DbProduct> products = DbManager.selectProducts(DbQueries.selectFromProductWithMinPrice());
+            ArrayList<DbProduct> products = new DbManager().selectProducts(DbQueries.selectFromProductWithMinPrice());
             for (DbProduct product: products) {
                 bodyText.append(product.getName()).append("\t").append(product.getPrice()).append("</br>").append("\n");
             }
