@@ -1,5 +1,6 @@
 package ru.akirakozov.sd.refactoring.servlet;
 
+import ru.akirakozov.sd.refactoring.HtmlResponseBuilder;
 import ru.akirakozov.sd.refactoring.db.DbManager;
 import ru.akirakozov.sd.refactoring.db.DbQueries;
 import ru.akirakozov.sd.refactoring.entities.DbProduct;
@@ -16,74 +17,62 @@ import java.util.ArrayList;
 public class QueryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        StringBuilder bodyText = new StringBuilder();
         String command = request.getParameter("command");
 
         if ("max".equals(command)) {
             try {
-                response.getWriter().println("<html><body>");
-                response.getWriter().println("<h1>Product with max price: </h1>");
+                bodyText.append("<h1>Product with max price: </h1>").append("\n");
 
                 ArrayList<DbProduct> products = DbManager.selectProducts(DbQueries.selectFromProductWithMaxPrice());
                 for (DbProduct product: products) {
-                    response.getWriter().println(product.getName() + "\t" + product.getPrice() + "</br>");
+                    bodyText.append(product.getName()).append("\t").append(product.getPrice()).append("</br>").append("\n");
                 }
-
-                response.getWriter().println("</body></html>");
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         } else if ("min".equals(command)) {
             try {
-                response.getWriter().println("<html><body>");
-                response.getWriter().println("<h1>Product with min price: </h1>");
+                bodyText.append("<h1>Product with min price: </h1>").append("\n");
 
                 ArrayList<DbProduct> products = DbManager.selectProducts(DbQueries.selectFromProductWithMinPrice());
                 for (DbProduct product: products) {
-                    response.getWriter().println(product.getName() + "\t" + product.getPrice() + "</br>");
+                    bodyText.append(product.getName()).append("\t").append(product.getPrice()).append("</br>").append("\n");
                 }
-
-                response.getWriter().println("</body></html>");
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         } else if ("sum".equals(command)) {
             try {
-                response.getWriter().println("<html><body>");
-                response.getWriter().println("Summary price: ");
+                bodyText.append("Summary price: ").append("\n");
 
                 ArrayList<Long> results = DbManager.aggregateProducts(DbQueries.aggregateProductSumPrice());
                 for (Long result: results) {
-                    response.getWriter().println(result);
+                    bodyText.append(result).append("\n");
                 }
-
-                response.getWriter().println("</body></html>");
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         } else if ("count".equals(command)) {
             try {
-                response.getWriter().println("<html><body>");
-                response.getWriter().println("Number of products: ");
+                bodyText.append("Number of products: ").append("\n");
 
                 ArrayList<Long> results = DbManager.aggregateProducts(DbQueries.aggregateProductCount());
                 for (Long result: results) {
-                    response.getWriter().println(result);
+                    bodyText.append(result).append("\n");
                 }
-
-                response.getWriter().println("</body></html>");
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         } else {
-            response.getWriter().println("Unknown command: " + command);
+            bodyText.append("Unknown command: ").append(command).append("\n");
         }
 
-        response.setContentType("text/html");
-        response.setStatus(HttpServletResponse.SC_OK);
+        new HtmlResponseBuilder(response).fillBodyWithText(bodyText.toString());
     }
 
 }
